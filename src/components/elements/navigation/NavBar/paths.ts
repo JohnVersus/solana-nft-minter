@@ -11,14 +11,14 @@ const NAV_LINKS: ISubNav[] = [
     href: '/transfers',
     children: [
       {
-        label: 'ERC20',
-        subLabel: 'Get your ERC20 transfers',
-        href: '/transfers/erc20',
+        label: 'SPL',
+        subLabel: 'Get your SPL transfers',
+        href: '/transfers/spl',
         logo: 'token',
       },
       {
         label: 'NFT',
-        subLabel: 'Get your ERC721 an ERC1155 transfers',
+        subLabel: 'Get your NFT transfers',
         href: '/transfers/nft',
         logo: 'lazyNft',
       },
@@ -29,14 +29,14 @@ const NAV_LINKS: ISubNav[] = [
     href: '/balances',
     children: [
       {
-        label: 'ERC20',
-        subLabel: 'Get your ERC20 balances',
-        href: '/balances/erc20',
+        label: 'SPL',
+        subLabel: 'Get your SPL balances',
+        href: '/balances/spl',
         logo: 'token',
       },
       {
         label: 'NFT',
-        subLabel: 'Get your ERC721 an ERC1155 balances',
+        subLabel: 'Get your NFT balances',
         href: '/balances/nft',
         logo: 'pack',
       },
