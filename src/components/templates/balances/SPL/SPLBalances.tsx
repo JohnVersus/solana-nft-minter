@@ -27,7 +27,7 @@ const SPLBalances: FC<ISPLBalances> = ({ balances }) => {
   return (
     <>
       <Heading size="lg" marginBottom={6}>
-        ERC20 Balances
+        SPL Balances
       </Heading>
       {balances?.length ? (
         <Box border="2px" borderColor={hoverTrColor} borderRadius="xl" padding="24px 18px">
@@ -70,7 +70,7 @@ const SPLBalances: FC<ISPLBalances> = ({ balances }) => {
           </TableContainer>
         </Box>
       ) : (
-        <Box>Looks Like you do not have any ERC20 tokens</Box>
+        <Box>Looks Like you do not have any SPL tokens</Box>
       )}
     </>
   );

@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 import Moralis from 'moralis';
 import { SPLBalances, ISPLBalances } from 'components/templates/balances/SPL';
 
-const ERC20: NextPage<ISPLBalances> = (props) => {
+const SPL: NextPage<ISPLBalances> = (props) => {
   return (
     <Default pageName="ERC20 Balances">
       <SPLBalances {...props} />
@@ -36,4 +36,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default ERC20;
+export default SPL;
