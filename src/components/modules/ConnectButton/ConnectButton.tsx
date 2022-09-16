@@ -23,7 +23,16 @@ const ConnectButton = () => {
     const { message } = await apiPost('/auth/request-message', account);
     const encodedMessage = new TextEncoder().encode(message);
     // @ts-ignore: Undefined invoke error
-    const signedMessage = await signMessage(encodedMessage);
+    const signedMessage = await signMessage(encodedMessage).catch((e) => {
+      disconnect();
+      throw toast({
+        title: 'Signature Failed',
+        description: `Error: ${e.message}`,
+        status: 'error',
+        position: 'bottom-right',
+        isClosable: true,
+      });
+    });
     const signature = base58.encode(signedMessage);
 
     const data = await signIn('credentials', {
