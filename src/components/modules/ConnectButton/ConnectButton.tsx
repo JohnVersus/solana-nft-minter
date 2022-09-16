@@ -1,62 +1,69 @@
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { useEffect } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
 import apiPost from 'utils/apiPost';
-import { Button, Text, HStack, Avatar, useToast } from '@chakra-ui/react';
-import { getEllipsisTxt } from 'utils/format';
+import { useToast } from '@chakra-ui/react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useWallet } from '@solana/wallet-adapter-react';
+import base58 from 'bs58';
 
 const ConnectButton = () => {
-  const { connectAsync } = useConnect({ connector: new InjectedConnector() });
-  const { disconnectAsync } = useDisconnect();
-  const { isConnected } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  const { data: session } = useSession();
+  const { publicKey, signMessage, disconnect, disconnecting, connected } = useWallet();
   const toast = useToast();
-  const { data } = useSession();
 
   const handleAuth = async () => {
-    if (isConnected) {
-      await disconnectAsync();
-    }
-    try {
-      const { account, chain } = await connectAsync();
+    const address = publicKey?.toBase58();
+    const chain = 'devnet';
+    const network = 'solana';
+    const account = {
+      address,
+      chain,
+      network,
+    };
+    const { message } = await apiPost('/auth/request-message', account);
+    const encodedMessage = new TextEncoder().encode(message);
+    // @ts-ignore: Undefined invoke error
+    const signedMessage = await signMessage(encodedMessage);
+    const signature = base58.encode(signedMessage);
 
-      const userData = { address: account, chain: chain.id, network: 'evm' };
-
-      const { message } = await apiPost('/auth/request-message', userData);
-
-      const signature = await signMessageAsync({ message });
-
-      await signIn('credentials', { message, signature, callbackUrl: '/' });
-    } catch (e) {
+    const data = await signIn('credentials', {
+      message,
+      signature,
+      redirect: false,
+    });
+    if (data?.ok) {
       toast({
-        title: 'Oops, something is wrong...',
-        description: (e as { message: string })?.message,
-        status: 'error',
-        position: 'top-right',
+        title: 'Authorization Successful',
+        description: 'Session Activated',
+        status: 'success',
+        position: 'bottom-right',
         isClosable: true,
       });
+    } else {
+      toast({
+        title: 'Authentication Failed',
+        description: `Error: ${data?.error}`,
+        status: 'error',
+        position: 'bottom-right',
+        isClosable: true,
+      });
+      disconnect();
     }
   };
 
-  const handleDisconnect = async () => {
-    await disconnectAsync();
-    signOut({ callbackUrl: '/' });
-  };
+  useEffect(() => {
+    if (connected && publicKey && session?.user.address !== publicKey?.toBase58()) {
+      handleAuth();
+    }
+  }, [connected, publicKey, session]);
 
-  if (data?.user) {
-    return (
-      <HStack onClick={handleDisconnect} cursor={'pointer'}>
-        <Avatar size="xs" />
-        <Text fontWeight="medium">{getEllipsisTxt(data.user.address)}</Text>
-      </HStack>
-    );
-  }
+  useEffect(() => {
+    if (disconnecting) {
+      signOut({ redirect: false });
+    }
+  }, [disconnecting]);
 
-  return (
-    <Button size="sm" onClick={handleAuth} colorScheme="blue">
-      Connect Wallet
-    </Button>
-  );
+  return <WalletMultiButton />;
 };
 
 export default ConnectButton;
