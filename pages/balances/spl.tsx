@@ -1,18 +1,19 @@
 import { Default } from 'components/layouts/Default';
-import { EvmAddress } from '@moralisweb3/evm-utils';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
-import getErc20LogoAddress from 'utils/getErc20LogoAddress';
 import Moralis from 'moralis';
-import { ERC20Balances, IERC20Balances } from 'components/templates/balances/ERC20';
+import { SPLBalances, ISPLBalances } from 'components/templates/balances/SPL';
 
-const ERC20: NextPage<IERC20Balances> = (props) => {
+const ERC20: NextPage<ISPLBalances> = (props) => {
   return (
     <Default pageName="ERC20 Balances">
-      <ERC20Balances {...props} />
+      <SPLBalances {...props} />
     </Default>
   );
 };
+
+// TO-DO: SPL for SPL contract need to be added when available
+// TO-DO: Requires fix for contract name and other data when available from api
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -23,25 +24,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: { error: 'Connect your wallet first' } };
   }
 
-  const balances = await Moralis.EvmApi.account.getTokenBalances({
+  const balances = await Moralis.SolApi.account.getSPL({
     address: session?.user.address,
-    chain: process.env.APP_CHAIN_ID,
+    network: process.env.APP_CHAIN_ID,
   });
-
-  const tokensWithLogosAdded = balances.toJSON().map((balance) => ({
-    ...balance,
-    token: {
-      ...balance.token,
-      logo: getErc20LogoAddress({
-        blockchain: 'ethereum',
-        address: EvmAddress.create(balance.token?.contractAddress || '').checksum,
-      }),
-    },
-  }));
 
   return {
     props: {
-      balances: JSON.parse(JSON.stringify(tokensWithLogosAdded)),
+      balances: JSON.parse(JSON.stringify(balances)),
     },
   };
 };
