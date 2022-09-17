@@ -5,11 +5,13 @@ import { useToast } from '@chakra-ui/react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import base58 from 'bs58';
+import { useRouter } from 'next/router';
 
 const ConnectButton = () => {
   const { data: session } = useSession();
   const { publicKey, signMessage, disconnect, disconnecting, connected } = useWallet();
   const toast = useToast();
+  const router = useRouter();
 
   const handleAuth = async () => {
     const address = publicKey?.toBase58();
@@ -72,6 +74,12 @@ const ConnectButton = () => {
       signOut({ redirect: false });
     }
   }, [disconnecting]);
+
+  useEffect(() => {
+    if (session !== undefined) {
+      router.replace(router.asPath);
+    }
+  }, [session]);
 
   return <WalletMultiButton />;
 };
