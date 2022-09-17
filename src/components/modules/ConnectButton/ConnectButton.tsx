@@ -61,10 +61,11 @@ const ConnectButton = () => {
   };
 
   useEffect(() => {
-    if (connected && publicKey && session?.user.address !== publicKey?.toBase58()) {
+    if (connected && publicKey && session !== undefined && session?.user.address !== publicKey?.toBase58()) {
+      console.log({ connected, publicKey, session });
       handleAuth();
     }
-  }, [connected, publicKey, session]);
+  }, [connected, publicKey]);
 
   useEffect(() => {
     if (disconnecting) {
