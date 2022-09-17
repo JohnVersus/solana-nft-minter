@@ -50,6 +50,7 @@ const ConnectButton = () => {
         position: 'bottom-right',
         isClosable: true,
       });
+      router.replace(router.asPath);
     } else {
       toast({
         title: 'Authentication Failed',
@@ -76,7 +77,9 @@ const ConnectButton = () => {
   }, [disconnecting]);
 
   useEffect(() => {
-    if (session !== undefined) {
+    console.log({ session });
+    if (session === null) {
+      console.log('Triggered');
       router.replace(router.asPath);
     }
   }, [session]);
