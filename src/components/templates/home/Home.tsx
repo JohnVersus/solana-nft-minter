@@ -13,23 +13,23 @@ const Home = () => {
           Moralis authentication
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ListIcon as={SettingsIcon} color="green.500" />
           Display Transactions
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display ERC20 transfers
+          <ListIcon as={SettingsIcon} color="green.500" />
+          Display SPL transfers
         </ListItem>
         <ListItem>
           <ListIcon as={CheckCircleIcon} color="green.500" />
-          Display ERC20 balances
+          Display SPL balances
         </ListItem>
         <ListItem>
           <ListIcon as={CheckCircleIcon} color="green.500" />
           Display NFT balances
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ListIcon as={SettingsIcon} color="green.500" />
           Display NFT transfers
         </ListItem>
         <ListItem>

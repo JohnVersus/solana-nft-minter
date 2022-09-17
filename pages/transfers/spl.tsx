@@ -22,10 +22,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: { error: 'Connect your wallet first' } };
   }
 
-  const transfers = await Moralis.EvmApi.account.getTokenTransfers({
-    address: session?.user.address,
-    chain: process.env.APP_CHAIN_ID,
-  });
+  // Todo: Need to be fixed once the api is released for this
+  const transfers = {
+    result: [],
+  };
+
+  // const transfers = await Moralis.EvmApi.account.getTokenTransfers({
+  //   address: session?.user.address,
+  //   chain: process.env.APP_CHAIN_ID,
+  // });
 
   return {
     props: {
