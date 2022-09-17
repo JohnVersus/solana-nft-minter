@@ -1,17 +1,30 @@
 import { useEffect } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import apiPost from 'utils/apiPost';
-import { useToast } from '@chakra-ui/react';
+import { theme, useToast } from '@chakra-ui/react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import base58 from 'bs58';
 import { useRouter } from 'next/router';
+import styled from '@emotion/styled';
+import { useColorModeValue } from '@chakra-ui/react';
 
 const ConnectButton = () => {
   const { data: session } = useSession();
   const { publicKey, signMessage, disconnect, disconnecting, connected } = useWallet();
   const toast = useToast();
   const router = useRouter();
+
+  const StyledWalletMultiButton = styled(WalletMultiButton)`
+    color: ${useColorModeValue(theme.colors.blue[900], theme.colors.white)};
+    background-color: ${useColorModeValue(theme.colors.gray[100], theme.colors.blackAlpha[200])};
+    :hover {
+      color: ${useColorModeValue(theme.colors.blue[900], theme.colors.white)};
+    }
+    :not([disabled]):hover {
+      background-color: ${useColorModeValue(theme.colors.gray[300], theme.colors.blue[900])};
+    }
+  `;
 
   const handleAuth = async () => {
     const address = publicKey?.toBase58();
@@ -82,7 +95,7 @@ const ConnectButton = () => {
     }
   }, [session]);
 
-  return <WalletMultiButton />;
+  return <StyledWalletMultiButton />;
 };
 
 export default ConnectButton;
