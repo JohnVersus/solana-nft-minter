@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <VStack w={'full'}>
       <Heading size="md" marginBottom={6}>
-        Ethereum Boilerplate
+        Ethereum Boilerplate (Solana Version)
       </Heading>
       <List spacing={3}>
         <ListItem>
@@ -45,8 +45,8 @@ const Home = () => {
           Better responsive design
         </ListItem>
         <ListItem>
-          <ListIcon as={SettingsIcon} color="green.500" />
-          Rainbowkit integration
+          <ListIcon as={CheckCircleIcon} color="green.500" />
+          Solana Wallet Adaptor integration
         </ListItem>
         <ListItem>
           <ListIcon as={SettingsIcon} color="green.500" />
