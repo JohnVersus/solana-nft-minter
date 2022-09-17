@@ -77,9 +77,7 @@ const ConnectButton = () => {
   }, [disconnecting]);
 
   useEffect(() => {
-    console.log({ session });
     if (session === null) {
-      console.log('Triggered');
       router.replace(router.asPath);
     }
   }, [session]);
