@@ -54,7 +54,7 @@ const SPLBalances: FC<ISPLBalances> = ({ balances }) => {
                         </VStack>
                       </HStack>
                     </Td>
-                    <Td>{amount}</Td>
+                    <Td>{Number(amount) / 10 ** 9}</Td>
                     <Td isNumeric>{getEllipsisTxt(mint || '')}</Td>
                   </Tr>
                 ))}
