@@ -1,14 +1,14 @@
 import { Default } from 'components/layouts/Default';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
-import { INFTBalances } from 'components/templates/balances/NFT/types';
-import { NFTBalances } from 'components/templates/balances/NFT';
+import { ISolNFTBalances } from 'components/templates/balances/SolNFT/types';
 import Moralis from 'moralis';
+import { SolNFTBalances } from 'components/templates/balances/SolNFT';
 
-const ERC20: NextPage<INFTBalances> = (props) => {
+const NFT: NextPage<ISolNFTBalances> = (props) => {
   return (
     <Default pageName="NFT Balances">
-      <NFTBalances {...props} />
+      <SolNFTBalances {...props} />
     </Default>
   );
 };
@@ -22,9 +22,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: { error: 'Connect your wallet first' } };
   }
 
-  const balances = await Moralis.EvmApi.account.getNFTs({
+  const balances = await Moralis.SolApi.account.getNFTs({
     address: session?.user.address,
-    chain: process.env.APP_CHAIN_ID,
+    network: process.env.APP_CHAIN_ID,
   });
 
   // (balances.result).filter((balance)=> balance.result.)
@@ -36,4 +36,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default ERC20;
+export default NFT;
