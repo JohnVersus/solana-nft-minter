@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@metaplex-foundation/js": "^0.15.0",
     "@moralisweb3/eslint-config": "^1.0.0",
     "@solana-mobile/wallet-adapter-mobile": "^0.9.1",
     "@solana/wallet-adapter-base": "^0.9.16",

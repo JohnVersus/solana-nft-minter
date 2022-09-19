@@ -1,7 +1,5 @@
 import { Default } from 'components/layouts/Default';
 import { GetServerSideProps, NextPage } from 'next';
-import { getSession } from 'next-auth/react';
-import Moralis from 'moralis';
 import NFTMinter from 'components/templates/nftMinter/NFTMinter';
 
 const NFTMinterPage: NextPage = (props) => {
@@ -12,7 +10,7 @@ const NFTMinterPage: NextPage = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {},
   };
