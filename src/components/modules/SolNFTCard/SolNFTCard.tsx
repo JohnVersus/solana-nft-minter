@@ -39,7 +39,7 @@ const SolNFTCard: FC<NFTAddress> = ({ nftAddress }) => {
 
   return (
     <>
-      <Box bgColor={bgColor} padding={3} borderRadius="xl" borderWidth="1px" borderColor={borderColor}>
+      <Box maxWidth="315px" bgColor={bgColor} padding={3} borderRadius="xl" borderWidth="1px" borderColor={borderColor}>
         <Box maxHeight="260px" overflow={'hidden'} borderRadius="xl">
           <Image
             src={resolveIPFS(nftData?.image)}
