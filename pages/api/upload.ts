@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!process.env.PRIVATE_KEY) {
     throw new Error('Add Private Key in env File');
   }
-  const { name, description, image } = req.body;
+  const { name, description, image, symbol } = req.body;
   const connection = new Connection(clusterApiUrl('devnet'));
   const metaplex = new Metaplex(connection);
   const key = Uint8Array.from(base58.decode(process.env.PRIVATE_KEY));
@@ -34,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         name,
         description,
         image,
+        symbol
       })
       .run();
 
