@@ -3,6 +3,14 @@ import { Connection, clusterApiUrl, Keypair } from '@solana/web3.js';
 import { bundlrStorage, Metaplex, walletAdapterIdentity } from '@metaplex-foundation/js';
 import base58 from 'bs58';
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '5mb',
+    },
+  },
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!process.env.PRIVATE_KEY) {
     throw new Error('Add Private Key in env File');
