@@ -5,6 +5,7 @@ const apiPost = async (endpoint: string, params: Record<string, unknown>) => {
     headers: {
       'content-type': 'application/json',
     },
+    maxBodyLength: Infinity,
   });
   return result.data;
 };
